@@ -66,10 +66,8 @@ impl FromStr for Line {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::util::hash_set;
 
-    fn hash_set(v: Vec<usize>) -> HashSet<usize> {
-        v.into_iter().collect()
-    }
 
     #[test]
     fn read_map_line() {

@@ -12,6 +12,7 @@ impl PasswordAndPolicy {
         input.parse().unwrap()
     }
 
+    #[allow(dead_code)]
     fn old_is_valid(&self) -> bool {
         let actual = self.password.chars()
             .filter(|c| c == &self.policy.character)
