@@ -11,6 +11,28 @@ pub fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
     Ok(io::BufReader::new(file).lines())
 }
 
+pub fn read_records<P: AsRef<Path>>(filename: P) -> io::Result<Vec<Vec<String>>> {
+    let lines = read_lines(filename)?;
+    let mut out = Vec::new();
+    let mut record = Vec::new();
+
+    for try_line in lines {
+        let line = try_line?;
+        if line.is_empty() {
+            out.push(record);
+            record = Vec::new();
+        } else {
+            record.push(line);
+        }
+    }
+
+    if !record.is_empty() {
+        out.push(record);
+    }
+
+    Ok(out)
+}
+
 pub fn read_file<T, P>(filename: P) -> Result<Vec<T>, T::Err>
     where P: AsRef<Path>,
           T: FromStr {
